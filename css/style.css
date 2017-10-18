@@ -163,6 +163,7 @@ footer small {
 
 #about {
 	background-image: url(../images/bg-about.jpg);
+	background-repeat: no-repeat;
 	background-position: center top;
 	background-attachment: fixed;
 	background-size: 100% auto;
@@ -439,11 +440,37 @@ a img:hover {
 
 @media screen and (min-width:600px) and (max-width:960px) {
 	/*画面サイズが960px以下の場合に適用*/
+	header {
+		width: auto;
+	}
 	#wrap {
-		width: 960px;
+		width: auto;
+	}
+	.content {
+		width: 95%;
+	}
+	.main-center {
+		width: 95%;
+	}
+	.main {
+		float: none;
+		width: auto;
+		margin: 0 5%;
+	}
+	.sidebar {
+		width: auto;
+		float: none;
+		margin: 0;
+		padding: 30px 10% 10px;
+		background-color: #f7f6f4;
+	}
+	#about .profile-image {
+		width: 200px;
+		float: none;
+		margin: 0 25% 0 25%;
 	}
 	footer {
-		width: 960px;
+		width: auto;
 	}
 }
 
