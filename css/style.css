@@ -126,7 +126,7 @@ footer small {
 }
 
 .book-btn a {
-	background-color: #009cd3;
+	background-color: #ff9900;
 	color: #ffffff;
 	font-size: 20px;
 	font-family: 'Bitter', serif;
@@ -136,7 +136,7 @@ footer small {
 	line-height: 50px;
 	margin-top: 20px;
 	border-radius: 5px;
-	border: 3px solid #009cd3;
+	border: 3px solid #ff9900;
 	float: left;
 }
 
@@ -186,7 +186,7 @@ footer small {
 
 #booklist .book-btn a:hover {
 	text-decoration: none;
-	color: #009cd3;
+	color: #ff9900;
 	background-color: transparent;
 }
 
