@@ -401,7 +401,7 @@ a img:hover {
 }
 
 #booklist .main li {
-	float: right;
+	float: left;
 	margin-right: 50px;
 	list-style: none;
 }
@@ -412,6 +412,17 @@ a img:hover {
 	background-position: center top;
 	background-attachment: fixed;
 	background-size: 100% auto;
+}
+
+#booklist #wrap img {
+	width: 300px;
+	float: left;
+	margin-top: 20px;
+}
+
+#booklist .video-txt {
+	width: 360px;
+	float: right;
 }
 
 #booklist .video-txt span {
