@@ -727,8 +727,7 @@ a img:hover {
 		width: 95%;
 		margin: 0 auto;
 	}
-	#booklist .li {
-		margin: 0;
+	#booklist .main li {
 		text-align: center;
 	}
 }
