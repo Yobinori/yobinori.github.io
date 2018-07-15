@@ -705,4 +705,24 @@ a img:hover {
 		line-height: 40px;
 		margin: 0 10px 15px 10px;
 	}
+	#booklist #wrap img {
+		float: none;
+	}
+	#booklist h2 {
+		width: auto;
+		float: none;
+		margin: 0 5% 10px 5%;
+	}
+	#booklist .video-txt {
+		float: none;
+		width: 90%;
+		margin: 0 auto;
+	}
+	#booklist .content {
+		width: 100%;
+	}
+	#booklist .main {
+		width: 95%;
+		margin: 0 auto;
+	}
 }
