@@ -649,6 +649,9 @@ a img:hover {
 	.main-center {
 		width: 95%;
 	}
+	#about li {
+    margin-left: 5px;
+}
 	#about .profileYobinori {
 		width: auto;
 	}
