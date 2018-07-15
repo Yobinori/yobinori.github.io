@@ -707,15 +707,17 @@ a img:hover {
 	}
 	#booklist #wrap img {
 		float: none;
-		width: 50%;
+		width: 51%;
 		text-align: center;
 	}
+
 	#booklist h2 {
 		width: auto;
 		float: none;
 		text-align: center;
 	}
 	#booklist .video-txt {
+		clear: both;
 		float: none;
 		width: 90%;
 		margin: 0 auto;
