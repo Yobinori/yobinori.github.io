@@ -716,6 +716,7 @@ a img:hover {
 
 	#booklist h2 {
 		width: auto;
+		margin:0;
 		float: none;
 		text-align: center;
 	}
