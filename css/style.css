@@ -744,7 +744,7 @@ a img:hover {
 	}
 	.book-btn a {
 		float: none;
-		margin: 0 auto;
+		margin: 0 auto 80px;
 		text-align: center;
 	}
 }
