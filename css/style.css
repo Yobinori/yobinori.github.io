@@ -707,6 +707,7 @@ a img:hover {
 	}
 	#booklist #wrap img {
 		float: none;
+		width: 60%;
 	}
 	#booklist h2 {
 		width: auto;
