@@ -125,11 +125,31 @@ footer small {
 	float: left;
 }
 
+.book-btn a {
+	background-color: #009cd3;
+	color: #ffffff;
+	font-size: 20px;
+	font-family: 'Bitter', serif;
+	width: 185px;
+	display: block;
+	text-align: center;
+	line-height: 50px;
+	margin-top: 20px;
+	border-radius: 5px;
+	border: 3px solid #009cd3;
+	float: left;
+}
+
 #index .next a {
 	margin-left: 40px;
 }
 
 .btn a:hover {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.book-btn a:hover {
 	text-decoration: none;
 	background-color: transparent;
 }
@@ -153,6 +173,18 @@ footer small {
 }
 
 #review .btn a:hover {
+	text-decoration: none;
+	color: #009cd3;
+	background-color: transparent;
+}
+
+#booklist .btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#booklist .book-btn a:hover {
 	text-decoration: none;
 	color: #009cd3;
 	background-color: transparent;
@@ -359,6 +391,16 @@ a img:hover {
 }
 
 #review .main-center li {
+	float: left;
+	margin-right: 50px;
+	list-style: none;
+}
+
+#booklist .main ul {
+	margin-left: 50px;
+}
+
+#booklist .main li {
 	float: left;
 	margin-right: 50px;
 	list-style: none;
