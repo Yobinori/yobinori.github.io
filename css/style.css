@@ -372,6 +372,11 @@ a img:hover {
 	background-size: 100% auto;
 }
 
+#booklist .video-txt span {
+	font-weight: bold;
+	font-size: 20px;
+}
+
 #contact {
 	background-image: url(../images/bg-contact.jpg);
 	background-repeat: no-repeat;
