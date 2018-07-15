@@ -146,6 +146,18 @@ footer small {
 	background-color: transparent;
 }
 
+#review .btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#review .btn a:hover {
+	text-decoration: none;
+	color: #009cd3;
+	background-color: transparent;
+}
+
 #index footer {
 	width: 960px;
 	margin: 150px auto 0 auto;
@@ -340,6 +352,16 @@ a img:hover {
 	background-position: center top;
 	background-attachment: fixed;
 	background-size: 100% auto;
+}
+
+#review .main-center ul {
+	margin-left: 50px;
+}
+
+#review .main-center li {
+	float: left;
+	margin-right: 50px;
+	list-style: none;
 }
 
 #contact {
@@ -609,5 +631,12 @@ a img:hover {
 	}
 	#videolist .sidebar section {
 		margin-bottom: 10px;
+	}
+	#review .main-center li {
+		margin-right: 0;
+	}
+	#review .btn a {
+		line-height: 40px;
+		margin: 0 10px 15px 10px;
 	}
 }
