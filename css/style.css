@@ -727,7 +727,19 @@ a img:hover {
 		width: 95%;
 		margin: 0 auto;
 	}
+	#booklist .main ul {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
 	#booklist .main li {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.book-btn a {
+		float: none;
+		margin: 0 auto;
 		text-align: center;
 	}
 }
