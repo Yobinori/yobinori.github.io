@@ -364,6 +364,14 @@ a img:hover {
 	list-style: none;
 }
 
+#booklist {
+	background-image: url(../images/bg-review.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
 #contact {
 	background-image: url(../images/bg-contact.jpg);
 	background-repeat: no-repeat;
