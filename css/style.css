@@ -401,8 +401,8 @@ a img:hover {
 }
 
 #booklist .main li {
-	float: left;
-	margin-right: 50px;
+	float: right;
+	margin-right: 100px;
 	list-style: none;
 }
 
