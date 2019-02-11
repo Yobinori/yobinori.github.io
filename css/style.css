@@ -226,8 +226,13 @@ h1 {
 }
 
 h2 {
-	font-family: 'Bitter', serif;
+	font-family: 'Bitter',"游ゴシック Medium", serif;
 	font-size: 24px;
+}
+
+h3 {
+	font-family: 'Bitter', serif;
+	font-size: 18px;
 }
 
 .icon:before {
