@@ -135,9 +135,25 @@ footer small {
 	text-align: center;
 	line-height: 50px;
 	margin-top: 20px;
+	margin-bottom: 80px;
 	border-radius: 5px;
 	border: 3px solid #ff9900;
 	float: left;
+}
+
+.fund-btn a {
+	background-color: #009cd3;
+	color: #ffffff;
+	font-size: 20px;
+	font-family: 'Bitter', serif;
+	width: 280px;
+	display: block;
+	text-align: center;
+	line-height: 50px;
+	margin-top: 20px;
+	border-radius: 5px;
+	border: 3px solid #009cd3;
+	float: center;
 }
 
 #index .next a {
@@ -150,6 +166,11 @@ footer small {
 }
 
 .book-btn a:hover {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.fund-btn a:hover {
 	text-decoration: none;
 	background-color: transparent;
 }
@@ -190,6 +211,18 @@ footer small {
 	background-color: transparent;
 }
 
+#funding .fund-btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#funding .fund-btn a:hover {
+	text-decoration: none;
+	color: #009cd3;
+	background-color: transparent;
+}
+
 #index footer {
 	width: 960px;
 	margin: 150px auto 0 auto;
@@ -213,6 +246,14 @@ footer small {
 	background-size: 100% auto;
 }
 
+#funding {
+	background-image: url(../images/bg-about.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
 .main-center {
 	width: 940px;
 	margin: 0 auto;
@@ -225,8 +266,13 @@ h1 {
 }
 
 h2 {
-	font-family: 'Bitter', serif;
+	font-family: 'Bitter',"游ゴシック Medium", serif;
 	font-size: 24px;
+}
+
+h3 {
+	font-family: 'Bitter', serif;
+	font-size: 18px;
 }
 
 .icon:before {
@@ -261,6 +307,14 @@ h2 {
 }
 
 #about li {
+	margin-left: 20px;
+}
+
+#funding .center {
+	text-align: center;
+}
+
+#funding li {
 	margin-left: 20px;
 }
 
@@ -378,6 +432,10 @@ a img:hover {
 	font-family: "Bitter", "游ゴシック Medium", serif;
 }
 
+#funding h2 {
+	font-family: "Bitter", "游ゴシック Medium", serif;
+}
+
 #review {
 	background-image: url(../images/bg-review.jpg);
 	background-repeat: no-repeat;
@@ -402,6 +460,16 @@ a img:hover {
 
 #booklist .main li {
 	float: right;
+	margin-right: 100px;
+	list-style: none;
+}
+
+#funding .main-center ul {
+	margin-left: 50px;
+}
+
+#funding .main-center li {
+	float: center;
 	margin-right: 100px;
 	list-style: none;
 }
@@ -624,6 +692,9 @@ a img:hover {
 	#about {
 		background-image: url(../images/bg-about-sp.jpg);
 	}
+	#funding {
+		background-image: url(../images/bg-about-sp.jpg);
+	}
 	#contact {
 		background-image: url(../images/bg-contact-sp.jpg);
 	}
@@ -663,6 +734,9 @@ a img:hover {
 		float: none;
 		margin: 0 25% 0 25%;
 	}
+	#funding li {
+    margin-left: 5px;
+}
 	.history {
 		width: auto;
 		margin-bottom: 0;
@@ -744,6 +818,37 @@ a img:hover {
 		text-align: center;
 	}
 	.book-btn a {
+		float: none;
+		margin: 0 auto 80px;
+		text-align: center;
+	}
+
+	#funding .main-center li {
+		margin-right: 0;
+	}
+	#funding .fund-btn a {
+		line-height: 40px;
+		margin: 0 10px 15px 10px;
+	}
+
+	#funding .content {
+		width: 100%;
+	}
+	#funding .main-center {
+		width: 95%;
+		margin: 0 auto;
+	}
+	#funding .main-center ul {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	#funding .main-center li {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.fund-btn a {
 		float: none;
 		margin: 0 auto 80px;
 		text-align: center;
