@@ -1,0 +1,876 @@
+@charset "UTF-8";
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #ffffff;
+	color: #333333;
+	font-size: 15px;
+	line-height: 2;
+	font-family: "游ゴシック Medium", serif;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+	margin-top: 0;
+}
+
+img {
+	vertical-align: bottom;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: #3583aa;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #788d98;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+header {
+	width: 960px;
+	height: 100px;
+	margin: 0 auto;
+}
+
+.logo {
+	float: left;
+	margin-top: 50px;
+}
+
+.global-nav {
+	float: right;
+	margin-top: 60px;
+}
+
+.global-nav li {
+	float: left;
+	margin: 0 20px;
+	font-size: 20px;
+	list-style: none;
+	font-family: 'Bitter', serif;
+}
+
+.global-nav li a {
+	color: #ffffff;
+}
+
+.global-nav li a:hover {
+	border-bottom: 2px solid #ffffff;
+	padding-bottom: 3px;
+	text-decoration: none;
+}
+
+#wrap {
+	clear: both;
+	background-color: #ffffff;
+	margin-top: 220px;
+	padding: 35px 0;
+}
+
+.content {
+	width: 960px;
+	margin: 0 auto;
+}
+
+footer {
+	text-align: center;
+	color: #ffffff;
+	padding: 20px 0;
+	background-color: #767671;
+}
+
+footer small {
+	font-size: 12px;
+}
+
+#index h1 {
+	font-size: 100px;
+	line-height: 1;
+	color: #ffffff;
+	font-family: 'Bitter', serif;
+	margin-bottom: 100px;
+	border: none;
+}
+
+#index .content {
+	margin-top: 150px;
+}
+
+#index p {
+	font-size: 16px;
+	color: #ffffff;
+}
+
+.btn a {
+	background-color: #009cd3;
+	color: #ffffff;
+	font-size: 20px;
+	font-family: 'Bitter', serif;
+	width: 185px;
+	display: block;
+	text-align: center;
+	line-height: 50px;
+	margin-top: 20px;
+	border-radius: 5px;
+	border: 3px solid #009cd3;
+	float: left;
+}
+
+.book-btn a {
+	background-color: #ff9900;
+	color: #ffffff;
+	font-size: 20px;
+	font-family: 'Bitter', serif;
+	width: 185px;
+	display: block;
+	text-align: center;
+	line-height: 50px;
+	margin-top: 20px;
+	margin-bottom: 80px;
+	border-radius: 5px;
+	border: 3px solid #ff9900;
+	float: left;
+}
+
+.fund-btn a {
+	background-color: #009cd3;
+	color: #ffffff;
+	font-size: 20px;
+	font-family: 'Bitter', serif;
+	width: 280px;
+	display: block;
+	text-align: center;
+	line-height: 50px;
+	margin-top: 20px;
+	border-radius: 5px;
+	border: 3px solid #009cd3;
+	float: center;
+}
+
+#index .next a {
+	margin-left: 40px;
+}
+
+.btn a:hover {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.book-btn a:hover {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.fund-btn a:hover {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+#video .btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#video .btn a:hover {
+	text-decoration: none;
+	color: #009cd3;
+	background-color: transparent;
+}
+
+#review .btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#review .btn a:hover {
+	text-decoration: none;
+	color: #009cd3;
+	background-color: transparent;
+}
+
+#booklist .btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#booklist .book-btn a:hover {
+	text-decoration: none;
+	color: #ff9900;
+	background-color: transparent;
+}
+
+#funding .fund-btn a {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "游ゴシック Medium", serif;
+}
+
+#funding .fund-btn a:hover {
+	text-decoration: none;
+	color: #009cd3;
+	background-color: transparent;
+}
+
+#index footer {
+	width: 960px;
+	margin: 150px auto 0 auto;
+	text-align: left;
+	background-color: transparent;
+}
+
+#index {
+	background-image: url(../images/index.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+#about {
+	background-image: url(../images/bg-about.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+#funding {
+	background-image: url(../images/bg-about.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+.main-center {
+	width: 940px;
+	margin: 0 auto;
+}
+
+h1 {
+	font-family: 'Bitter', "游ゴシック Medium", serif;
+	font-size: 36px;
+	border-bottom: 1px solid #cccccc;
+}
+
+h2 {
+	font-family: 'Bitter',"游ゴシック Medium", serif;
+	font-size: 24px;
+}
+
+h3 {
+	font-family: 'Bitter', serif;
+	font-size: 18px;
+}
+
+.icon:before {
+	content: "";
+	padding-right: 10px;
+	border-left: 7px solid #9cb4a4;
+}
+
+#about .profileYobinori {
+	width: 710px;
+}
+
+#about .center {
+	text-align: center;
+}
+
+#about .profile-txt {
+	width: 540px;
+	float: left;
+	margin-bottom: 30px;
+}
+
+#about .profile-txt span {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#about .profile-image {
+	float: right;
+	width: 250px;
+	margin: 30px 60px 0 0;
+}
+
+#about li {
+	margin-left: 20px;
+}
+
+#funding .center {
+	text-align: center;
+}
+
+#funding li {
+	margin-left: 20px;
+}
+
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+section {
+	margin-bottom: 35px;
+}
+
+#about .history th {
+	width: 240px;
+	background-color: #f0f0f0;
+	padding: 12px 0;
+	border: 1px solid #cccccc;
+}
+
+#about .history td {
+	width: 660px;
+	padding: 12px 0 12px 40px;
+	border: 1px solid #cccccc;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+#index #wrap {
+	background-color: transparent;
+	margin-top: 0;
+	padding: 0;
+}
+
+.main {
+	width: 680px;
+	margin: 0 30px 0 10px;
+	float: left;
+}
+
+.sidebar {
+	width: 200px;
+	margin: 0 10px 0 30px;
+	float: right;
+	font-family: 'Bitter', serif;
+}
+
+a img:hover {
+	opacity: 0.8;
+}
+
+.sidebar {
+	margin-bottom: 10px;
+}
+
+.sidebar ul {
+	font-size: 16px;
+	margin-left: 20px;
+}
+
+.sidebar ul a {
+	color: #333333;
+}
+
+#video {
+	background-image: url(../images/bg-video.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+#video .main-center ul {
+	margin-left: 50px;
+}
+
+#video .main-center li {
+	float: left;
+	margin-right: 50px;
+	list-style: none;
+}
+
+#videolist {
+	background-image: url(../images/bg-video.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+#videolist .video-block {
+	width: 310px;
+	margin-right: 30px;
+	margin-bottom: 14px;
+	float: left;
+}
+
+#videolist .video-block h2 {
+	margin-bottom: 8px;
+}
+
+
+#videolist #wrap img {
+	width: 310px;
+	float: none;
+}
+
+#videolist .video-txt {
+	width: 310px;
+	height: 58px;
+	float: none;
+}
+
+#videolist .video-txt span {
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 0.1;
+}
+
+#videolist .sidebar h2 {
+	margin-bottom: 0;
+}
+
+#videolist h2 {
+	font-family: "Bitter", "游ゴシック Medium", serif;
+}
+
+#funding h2 {
+	font-family: "Bitter", "游ゴシック Medium", serif;
+}
+
+#review {
+	background-image: url(../images/bg-review.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+#review .main-center ul {
+	margin-left: 50px;
+}
+
+#review .main-center li {
+	float: left;
+	margin-right: 50px;
+	list-style: none;
+}
+
+#booklist .main ul {
+	margin-left: 50px;
+}
+
+#booklist .main li {
+	float: right;
+	margin-right: 100px;
+	list-style: none;
+}
+
+#funding .main-center ul {
+	margin-left: 50px;
+}
+
+#funding .main-center li {
+	float: center;
+	margin-right: 100px;
+	list-style: none;
+}
+
+#booklist {
+	background-image: url(../images/bg-review.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+#booklist #wrap img {
+	width: 200px;
+	float: left;
+	margin-top: 20px;
+}
+
+#booklist .video-txt {
+	width: 360px;
+	float: right;
+}
+
+#booklist .video-txt span {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#contact {
+	background-image: url(../images/bg-contact.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+
+#contact .access table {
+	float: left;
+}
+
+#contact .access th, #contact .access td {
+	text-align: left;
+	vertical-align: top;
+	line-height: 2.5;
+}
+
+#contact .access td {
+	padding-left: 30px;
+}
+
+#contact .access iframe {
+	width: 460x;
+	float: right;
+}
+
+#contact .form {
+	background-color: #eaeaea;
+	padding: 30px 50px;
+}
+
+#contact .form dl dt {
+	width: 165px;
+	padding: 10px 0;
+	float: left;
+	clear: both;
+}
+
+#contact .form dl dd {
+	padding: 10px 0;
+}
+
+#contact .form .name {
+	width: 240px;
+	height: 30px;
+}
+
+#contact .form .email {
+	width: 300px;
+	height: 30px;
+}
+
+#contact .form .tel {
+	width: 240px;
+	height: 30px;
+}
+
+#contact .form .type {
+	width: 180px;
+	height: 30px;
+}
+
+#contact .form .message {
+	width: 660px;
+	height: 150px;
+}
+
+#contact .form button {
+	background-color: #009cd3;
+	color: #ffffff;
+	font-size: 20px;
+	width: 120px;
+	display: block;
+	text-align: center;
+	line-height: 50px;
+	border-radius: 5px;
+	border: 3px solid #009cd3;
+	margin-left: 165px;
+}
+
+#contact .form button:hover {
+	background-color: #ffffff;
+	color: #009cd3;
+	cursor: pointer;
+}
+
+#contact .form .required:after {
+	content: " * ";
+	color: #ff0000;
+}
+
+#contact .form .attention {
+	margin: 20px 0 0 165px;
+}
+
+@media screen and (min-width:600px) and (max-width:960px) {
+	/*画面サイズが960px以下の場合に適用*/
+	header {
+		width: auto;
+	}
+	#wrap {
+		width: auto;
+	}
+	.content {
+		width: 95%;
+	}
+	.main-center {
+		width: 95%;
+	}
+	.main {
+		float: none;
+		width: auto;
+		margin: 0 5%;
+	}
+	.sidebar {
+		width: auto;
+		float: none;
+		margin: 0;
+		padding: 30px 10% 10px;
+		background-color: #f7f6f4;
+	}
+	#about .profile-image {
+		width: 200px;
+		float: none;
+		margin: 0 25% 0 25%;
+	}
+	footer {
+		width: auto;
+	}
+}
+
+@media screen and (max-width:600px) {
+	/* 画面サイズが600px以下の場合に適用 */
+	body {
+		font-size: 3.5vw;
+	}
+	h1 {
+		font-size: 7.2vw;
+	}
+	h2 {
+		font-size: 6vw;
+	}
+	header {
+		width: auto;
+		margin: 0 5%;
+	}
+	.logo {
+		float: none;
+		margin-top: 45px;
+		text-align: center;
+	}
+	.logo img {
+		width: 65%;
+	}
+	.global-nav {
+		float: none;
+		margin-top: 20px;
+		text-align: center;
+	}
+	.global-nav li {
+		font-size: 4.3vw;
+		display: inline;
+		float: none;
+		margin: 0 5px;
+	}
+	#wrap {
+		margin-top: 40px;
+		padding: 35px 0 0;
+	}
+	.content {
+		width: 95%;
+	}
+	.main {
+		float: none;
+		width: auto;
+		margin: 0 5%;
+	}
+	h2 img {
+		max-width: 100%;
+	}
+	.sidebar {
+		width: auto;
+		float: none;
+		margin: 0;
+		padding: 30px 10% 10px;
+		background-color: #f7f6f4;
+	}
+	#index {
+		background-image: url(../images/bg-index-sp.jpg);
+	}
+	#about {
+		background-image: url(../images/bg-about-sp.jpg);
+	}
+	#funding {
+		background-image: url(../images/bg-about-sp.jpg);
+	}
+	#contact {
+		background-image: url(../images/bg-contact-sp.jpg);
+	}
+	#index footer {
+		width: auto;
+		margin-top: 50px;
+		padding: 0;
+		text-align: left;
+		background-color: transparent;
+	}
+	#index h1 {
+		font-size: 9vw;
+		width: auto;
+		margin: 0 5% 100px;
+	}
+	#index .next a {
+		margin: 0;
+	}
+	#index .btn a {
+		float: none;
+		margin: 0 auto 15px;
+	}
+	.main-center {
+		width: 95%;
+	}
+	#about li {
+    margin-left: 5px;
+}
+	#about .profileYobinori {
+		width: auto;
+	}
+	#about .profile-txt {
+		width: auto;
+	}
+	#about .profile-image {
+		width: 50%;
+		float: none;
+		margin: 0 25% 0 25%;
+	}
+	#funding li {
+    margin-left: 5px;
+}
+	.history {
+		width: auto;
+		margin-bottom: 0;
+		padding-bottom: 35px;
+	}
+	.content {
+		padding-bottom: 35px;
+	}
+	#video .main-center li {
+		margin-right: 0;
+	}
+	#video .btn a {
+		line-height: 40px;
+		margin: 0 10px 15px 10px;
+	}
+	#videolist #wrap img {
+		float: none;
+	}
+	#videolist h2 {
+		width: auto;
+		float: none;
+		margin: 0 5% 10px 5%;
+	}
+	#videolist h2.icon {
+		margin-bottom: 8%;
+	}
+	#videolist .video-block {
+		float: none;
+		width: 90%;
+		margin: 0 auto;
+	}
+	#videolist .video-txt {
+		width: 90%;
+		margin: 0 auto;
+	}
+	#videolist .content {
+		width: 100%;
+	}
+	#videolist .main {
+		width: 95%;
+		margin: 0 auto;
+	}
+	#videolist .sidebar section {
+		margin-bottom: 10px;
+	}
+	#review .main-center li {
+		margin-right: 0;
+	}
+	#review .btn a {
+		line-height: 40px;
+		margin: 0 10px 15px 10px;
+	}
+	#booklist #wrap img {
+		float: none;
+		width: 51%;
+		text-align: center;
+	}
+
+	#booklist h2 {
+		width: auto;
+		margin:0;
+		float: none;
+		text-align: center;
+	}
+	#booklist .video-txt {
+		clear: both;
+		float: none;
+		width: 90%;
+		margin: 0 auto;
+	}
+	#booklist .content {
+		width: 100%;
+	}
+	#booklist .main {
+		width: 95%;
+		margin: 0 auto;
+	}
+	#booklist .main ul {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	#booklist .main li {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.book-btn a {
+		float: none;
+		margin: 0 auto 80px;
+		text-align: center;
+	}
+
+	#funding .main-center li {
+		margin-right: 0;
+	}
+	#funding .fund-btn a {
+		line-height: 40px;
+		margin: 0 10px 15px 10px;
+	}
+
+	#funding .content {
+		width: 100%;
+	}
+	#funding .main-center {
+		width: 95%;
+		margin: 0 auto;
+	}
+	#funding .main-center ul {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	#funding .main-center li {
+		float: none;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.fund-btn a {
+		float: none;
+		margin: 0 auto 80px;
+		text-align: center;
+	}
+}
