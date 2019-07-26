@@ -408,33 +408,20 @@ a img:hover {
 	background-size: 100% auto;
 }
 
-#videolist .video-block {
-	width: 310px;
-	margin-right: 30px;
-	margin-bottom: 14px;
-	float: left;
-}
-
-#videolist .video-block h2 {
-	margin-bottom: 8px;
-}
-
-
 #videolist #wrap img {
-	width: 310px;
-	float: none;
+	width: 300px;
+	float: left;
+	margin-top: 20px;
 }
 
 #videolist .video-txt {
-	width: 310px;
-	height: 58px;
-	float: none;
+	width: 360px;
+	float: right;
 }
 
 #videolist .video-txt span {
 	font-weight: bold;
-	font-size: 19px;
-	line-height: 0.1;
+	font-size: 20px;
 }
 
 #videolist .sidebar h2 {
@@ -502,7 +489,7 @@ a img:hover {
 }
 
 #booklist .video-txt {
-	width: 400px;
+	width: 360px;
 	float: right;
 }
 
@@ -773,15 +760,8 @@ a img:hover {
 		float: none;
 		margin: 0 5% 10px 5%;
 	}
-	#videolist h2.icon {
-		margin-bottom: 8%;
-	}
-	#videolist .video-block {
-		float: none;
-		width: 90%;
-		margin: 0 auto;
-	}
 	#videolist .video-txt {
+		float: none;
 		width: 90%;
 		margin: 0 auto;
 	}
