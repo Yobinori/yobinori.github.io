@@ -758,6 +758,10 @@ a img:hover {
 	.content {
 		padding-bottom: 35px;
 	}
+	#video .main-center ul {
+		width:211px;
+		margin: 0 auto;
+	}
 	#video .main-center li {
 		margin-right: 0;
 	}
@@ -794,6 +798,10 @@ a img:hover {
 	}
 	#videolist .sidebar section {
 		margin-bottom: 10px;
+	}
+	#review .main-center ul {
+		width:211px;
+		margin: 0 auto;
 	}
 	#review .main-center li {
 		margin-right: 0;
