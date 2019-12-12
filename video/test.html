@@ -53,7 +53,13 @@
 			</div>
 
 			<aside class="sidebar">
-				<script type="text/javascript" src="side-bar.js"></script>
+				<div id="target"></div>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$('#target').load('side-bar.html');
+					});
+				</script>
 			</aside>
 		</div>
 	</div>
