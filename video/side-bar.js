@@ -1,4 +1,3 @@
-<script type="text/javascript">
 
   <section>
     <h2>Mathematics</h2>
@@ -57,6 +56,3 @@
       <li><a href="extra.html">番外編</a></li>
     </ul>
   </section>
-
-
-</script>
