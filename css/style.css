@@ -349,7 +349,7 @@ section {
 
 #about .history td {
 	width: 660px;
-	padding: 12px 0 12px 40px;
+	padding: 12px 40px 12px 40px;
 	border: 1px solid #cccccc;
 }
 
