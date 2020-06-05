@@ -312,10 +312,8 @@ h3 {
 
 .sns li {
 	float: left;
-	margin: 0 20px;
-	font-size: 20px;
+	margin: 0 20px 15px;
 	list-style: none;
-	font-family: 'Bitter', serif;
 }
 
 #funding .center {
