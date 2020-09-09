@@ -972,6 +972,11 @@ a img:hover {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #ffffff;
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  #wrap {
+    background-color: #1f1f1f;
   }
 }
