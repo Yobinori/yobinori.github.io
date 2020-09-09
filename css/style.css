@@ -977,6 +977,18 @@ a img:hover {
   }
 
   #wrap {
-    background-color: #1f1f1f;
+    background-color: #202124;
+  }
+
+  footer {
+    background-color: #292A2D;
+  }
+
+  .sidebar {
+    background-color: #292A2D;
+  }
+
+  .sidebar ul a {
+    color: #9AA0A6;
   }
 }
