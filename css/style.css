@@ -969,3 +969,10 @@ a img:hover {
     text-align: center;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1f1f1f;
+    color: #AAAAAA;
+  }
+}
