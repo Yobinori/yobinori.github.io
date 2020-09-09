@@ -817,6 +817,10 @@ a img:hover {
   }
 
   .content {
+    padding-bottom: 35px;
+  }
+
+  #videolist .content {
     padding-bottom: 0px;
   }
 
