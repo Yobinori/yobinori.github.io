@@ -988,10 +988,6 @@ a img:hover {
     background-color: #2e3138;
   }
 
-  .sidebar {
-    background-color: #2e3138;
-  }
-
   .sidebar ul a {
     color: #f1f1f1;
   }
@@ -999,5 +995,11 @@ a img:hover {
   #about .history th {
     background-color: #2e3138;
 
+  }
+}
+
+@media screen and (max-width:600px) and (prefers-color-scheme: dark) {
+  .sidebar {
+    background-color: #2e3138;
   }
 }
