@@ -624,10 +624,7 @@ a img:hover {
   /*画面サイズが960px以下の場合に適用*/
   header {
     width: auto;
-  }
-
-  .logo {
-    margin-left: 15px;
+    margin: 0 15px;
   }
 
   #wrap {
