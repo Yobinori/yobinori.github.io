@@ -628,6 +628,9 @@ a img:hover {
 
   #wrap {
     width: auto;
+    margin-top: 40px;
+    padding: 35px 0 0;
+
   }
 
   .content {
