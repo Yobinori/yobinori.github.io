@@ -626,6 +626,10 @@ a img:hover {
     width: auto;
   }
 
+  .logo {
+    margin-left: 15px;
+  }
+
   #wrap {
     width: auto;
     margin-top: 40px;
