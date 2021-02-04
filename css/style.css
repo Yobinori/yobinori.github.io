@@ -652,6 +652,10 @@ a img:hover {
     background-color: #f7f6f4;
   }
 
+  #videolist .content {
+    width: 100%;
+  }
+
   #about .profile-image {
     width: 200px;
     float: none;
