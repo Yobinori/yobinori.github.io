@@ -679,6 +679,11 @@ a img:hover {
     margin: 0 25% 0 25%;
   }
 
+  #about .video-block {
+    float: none;
+    margin: 0 auto;
+  }
+
   footer {
     width: auto;
   }
