@@ -531,6 +531,10 @@ a img:hover {
   background-size: 100% auto;
 }
 
+#contact p {
+  margin-bottom: 15px;
+}
+
 #contact .access table {
   float: left;
 }
