@@ -282,6 +282,14 @@ h3 {
   border-left: 7px solid #9cb4a4;
 }
 
+#about .video-block {
+  width: 320px;
+  margin-left: 15px;
+  margin-right: 20px;
+  margin-bottom: 14px;
+  float: left;
+}
+
 #about .profileYobinori {
   width: 710px;
 }
@@ -787,6 +795,12 @@ a img:hover {
 
   .main-center {
     width: 95%;
+  }
+
+  #about .video-block {
+    float: none;
+    width: 90%;
+    margin: 0 auto;
   }
 
   #about li {
