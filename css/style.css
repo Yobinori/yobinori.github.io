@@ -282,6 +282,20 @@ h3 {
   border-left: 7px solid #9cb4a4;
 }
 
+#about .video-block {
+  width: 320px;
+  margin-left: 15px;
+  margin-right: 20px;
+  margin-bottom: 14px;
+  float: left;
+}
+
+#about .video-txt span {
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 0.1;
+}
+
 #about .profileYobinori {
   width: 710px;
 }
@@ -531,6 +545,10 @@ a img:hover {
   background-size: 100% auto;
 }
 
+#contact p {
+  margin-bottom: 45px;
+}
+
 #contact .access table {
   float: left;
 }
@@ -624,10 +642,14 @@ a img:hover {
   /*画面サイズが960px以下の場合に適用*/
   header {
     width: auto;
+    margin: 0 15px;
   }
 
   #wrap {
     width: auto;
+    margin-top: 40px;
+    padding: 35px 0 0;
+
   }
 
   .content {
@@ -652,10 +674,20 @@ a img:hover {
     background-color: #f7f6f4;
   }
 
+  #videolist .content {
+    width: 100%;
+    padding-bottom: 0px;
+  }
+
   #about .profile-image {
     width: 200px;
     float: none;
     margin: 0 25% 0 25%;
+  }
+
+  #about .video-block {
+    float: none;
+    margin: 0 auto;
   }
 
   footer {
@@ -774,6 +806,12 @@ a img:hover {
 
   .main-center {
     width: 95%;
+  }
+
+  #about .video-block {
+    float: none;
+    width: 90%;
+    margin: 0 auto;
   }
 
   #about li {
@@ -996,6 +1034,13 @@ a img:hover {
     background-color: #2e3138;
 
   }
+}
+
+@media screen and (min-width:600px) and (max-width:960px) and (prefers-color-scheme: dark) {
+  .sidebar {
+    background-color: #2e3138;
+  }
+
 }
 
 @media screen and (max-width:600px) and (prefers-color-scheme: dark) {
