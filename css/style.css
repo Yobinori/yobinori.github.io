@@ -898,7 +898,7 @@ a img:hover {
 
   #videolist .video-txt {
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 10px;
   }
 
   #videolist .content {
