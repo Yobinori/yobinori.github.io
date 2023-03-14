@@ -680,7 +680,7 @@ a img:hover {
   }
 
   #about .profile-image {
-    width: 200px;
+    width: 220px;
     float: none;
     margin: 0 25% 0 25%;
   }
@@ -827,9 +827,9 @@ a img:hover {
   }
 
   #about .profile-image {
-    width: 50%;
+    width: 60%;
     float: none;
-    margin: 0 25% 0 25%;
+    margin: 0 20% 0 20%;
   }
 
   #about .sns {
