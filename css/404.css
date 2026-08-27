@@ -1,0 +1,313 @@
+:root {
+  --blue: #009cd3;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  margin: 0;
+  background: #21242a;
+  color: var(--white);
+  font-family: "游ゴシック Medium", "Yu Gothic Medium", "YuGothic", Meiryo, sans-serif;
+  font-size: 15px;
+  line-height: 2;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.error-scene {
+  position: relative;
+  min-height: calc(100vh - 70px);
+  overflow: hidden;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.34)), url("../images/index.jpg");
+  background-position: center center;
+  background-size: cover;
+}
+
+.site-header {
+  position: relative;
+  z-index: 2;
+  width: 960px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.logo {
+  float: left;
+  margin-top: 50px;
+}
+
+.logo img {
+  width: 290px;
+  height: auto;
+}
+
+.global-nav {
+  float: right;
+  margin-top: 60px;
+}
+
+.global-nav li {
+  float: left;
+  margin: 0 20px;
+  font-family: Bitter, serif;
+  font-size: 20px;
+  list-style: none;
+}
+
+.global-nav a {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.global-nav a:hover,
+.global-nav a:focus-visible {
+  border-bottom: 2px solid var(--white);
+  padding-bottom: 3px;
+  text-decoration: none;
+}
+
+.error-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 960px;
+  min-height: calc(100vh - 170px);
+  margin: 0 auto;
+  padding: 72px 0 88px;
+}
+
+.error-copy {
+  width: min(720px, 100%);
+}
+
+.error-code {
+  margin: 0 0 4px;
+  color: var(--blue);
+  font-family: Bitter, Georgia, serif;
+  font-size: 94px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+h1 {
+  margin: 0 0 26px;
+  font-family: Bitter, "游ゴシック Medium", serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.mobile-break {
+  display: none;
+}
+
+.error-lead,
+.guidance {
+  margin: 0;
+  font-size: 16px;
+}
+
+var {
+  font-family: "STIX Two Text", "Cambria Math", "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.equation {
+  margin: 26px 0;
+  padding: 10px 0 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.34);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+  font-family: Bitter, "游ゴシック Medium", serif;
+  font-size: 24px;
+}
+
+.equation strong {
+  color: var(--blue);
+  font-size: 34px;
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  margin-top: 34px;
+}
+
+.button {
+  display: block;
+  width: 185px;
+  border: 3px solid var(--blue);
+  border-radius: 5px;
+  background-color: var(--blue);
+  color: var(--white);
+  font-family: Bitter, "游ゴシック Medium", serif;
+  font-size: 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:visited {
+  color: var(--white);
+}
+
+.button:hover,
+.button:focus-visible {
+  background-color: transparent;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.site-footer {
+  padding: 20px 0;
+  background-color: #2e3138;
+  color: var(--white);
+  text-align: center;
+}
+
+.site-footer small {
+  font-size: 12px;
+}
+
+@media screen and (max-width: 960px) {
+  .site-header {
+    width: auto;
+    height: auto;
+    margin: 0 15px;
+    padding-top: 45px;
+  }
+
+  .logo {
+    float: none;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .logo img {
+    margin: 0 auto;
+  }
+
+  .global-nav {
+    float: none;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .global-nav li {
+    display: inline;
+    float: none;
+    margin: 0 12px;
+  }
+
+  .error-content {
+    width: 90%;
+    min-height: auto;
+    padding: 100px 0 110px;
+  }
+
+  .error-copy {
+    width: min(720px, 100%);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .error-scene {
+    min-height: calc(100vh - 70px);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.36)), url("../images/bg-index-sp.jpg");
+  }
+
+  .site-header {
+    width: auto;
+    margin: 0 5%;
+    padding-top: 0;
+  }
+
+  .logo {
+    margin-top: 45px;
+  }
+
+  .logo img {
+    width: 65%;
+    max-width: 290px;
+  }
+
+  .global-nav li {
+    margin: 0 5px;
+    font-size: 4.3vw;
+  }
+
+  .error-content {
+    display: block;
+    width: 90%;
+    padding: 74px 0 88px;
+  }
+
+  .error-code {
+    font-size: 22vw;
+  }
+
+  h1 {
+    font-size: 8vw;
+    line-height: 1.45;
+  }
+
+  .mobile-break {
+    display: block;
+  }
+
+  .error-lead,
+  .guidance {
+    font-size: 3.8vw;
+  }
+
+  .equation {
+    overflow-wrap: anywhere;
+    font-size: 4.8vw;
+  }
+
+  .equation strong {
+    font-size: 8vw;
+  }
+
+  .error-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 185px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
