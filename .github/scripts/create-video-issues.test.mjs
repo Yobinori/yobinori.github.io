@@ -89,9 +89,17 @@ test("an unrecognized Shorts response fails closed", async () => {
   await assert.rejects(() => classifyShortVideo("AbCdEfGhI12", fetchImpl), /classification failed/);
 });
 
-test("a generic YouTube page with HTTP 200 is not assumed to be Shorts", async () => {
+test("a non-challenge HTML response from the Shorts URL is classified as Shorts", async () => {
   const html = '<html><script>var ytInitialData={"id":"AbCdEfGhI12"}</script></html>';
   const fetchImpl = async () => new Response(html, {
+    status: 200,
+    headers: { "content-type": "text/html" },
+  });
+  assert.equal(await classifyShortVideo("AbCdEfGhI12", fetchImpl), true);
+});
+
+test("an empty HTTP 200 response fails closed", async () => {
+  const fetchImpl = async () => new Response("", {
     status: 200,
     headers: { "content-type": "text/html" },
   });

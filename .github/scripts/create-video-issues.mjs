@@ -218,12 +218,11 @@ export async function classifyShortVideo(videoId, fetchImpl = fetch) {
     lowerHtml.includes("before you continue to youtube") ||
     lowerHtml.includes("unusual traffic") ||
     lowerHtml.includes("captcha");
-  const looksLikeShortsPage =
-    contentType.includes("text/html") &&
-    html.includes(videoId) &&
-    (html.includes("WEB_PAGE_TYPE_SHORTS") ||
-      html.includes("shortsLockupViewModel") ||
-      html.includes("shortsPlayer"));
+  // YouTube does not expose a Shorts flag in the Data API. In practice, the
+  // /shorts URL redirects regular videos to /watch and serves Shorts as HTML.
+  // The returned HTML varies by region and user agent, so do not depend on
+  // internal JavaScript property names here.
+  const looksLikeShortsPage = contentType.includes("text/html") && html.trim().length > 0;
 
   if (isChallenge || !looksLikeShortsPage) {
     throw new Error(`Shorts classification failed for ${videoId}: response was not a recognizable YouTube Shorts page.`);
