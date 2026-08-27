@@ -193,7 +193,7 @@ var {
 
 @media screen and (min-width: 1440px) {
   .error-content {
-    width: 1440px;
+    width: 1200px;
     max-width: calc(100% - 80px);
   }
 }
