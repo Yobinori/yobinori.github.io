@@ -1,281 +1,249 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
-<!--  created with free sitemap generation system www.sitemapxml.jp  --> 
-<url>
-  <loc>https://yobinori.jp/</loc>
-  <priority>1.0</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/index.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/about.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/contact.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/funding.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/analysis.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/linear-algebra.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/algebra.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/set-theory.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/probability-statistics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/vector-analysis.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/discrete-mathematics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/math-others.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/mechanics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/analytical-mechanics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/electromagnetism.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/fluid-mechanics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/quantum-mechanics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/thermodynamics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/statistical-mechanics.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/condensed-matter.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/integral.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/indian-calculation.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/one-minute.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/chemistry.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/math-hs.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/phys-hs.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/chem-hs.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/academic.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/lecture.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/collaboration.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/school-festival.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/video/extra.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/yobinori-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/analysis-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/linear-algebra-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/algebra-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/set-theory-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/probability-statistics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/vector-analysis-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/discrete-mathematics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/mechanics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/electromagnetism-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/fluid-mechanics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/quantum-mechanics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/thermodynamics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/statistical-mechanics-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/chemistry-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/math-pub-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/phys-pub-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/extra-pub-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/takumi-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-<url>
-  <loc>https://yobinori.jp/review/yasu-book.html</loc>
-  <priority>0.7</priority>
-  <lastmod>2019-10-07T00:03:42+09:00</lastmod>
-</url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yobinori.jp/</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/about.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/contact.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/funding.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/academic-collaboration.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/academic.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/algebra.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/analytical-mechanics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/biology.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/chem-hs.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/chemistry.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/collaboration.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/complex-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/condensed-matter.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/differential-equation.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/discrete-mathematics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/electromagnetism.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/extra.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/fluid-mechanics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/fourier-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/indian-calculation.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/integer.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/integral.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/lecture.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/linear-algebra.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/machine-learning.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/math-hs.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/math-others.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/mechanics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/nobel-prize.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/one-minute.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/phys-hs.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/phys-seminar.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/physics-olympiad.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/probability-statistics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/quantum-mechanics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/relativity.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/researcher-desk.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/researcher-life.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/school-festival.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/scientific-questions.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/scientist.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/set-theory.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/statistical-mechanics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/thermodynamics.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/useful-information.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/video/vector-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/algebra-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/analysis-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/biology-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/chemistry-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/complex-analysis-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/condensed-matter-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/cosmology.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/differential-equation-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/discrete-mathematics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/electromagnetism-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/extra-pub-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/fluid-mechanics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/hs-chem-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/hs-math-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/hs-phys-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/information-theory-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/linear-algebra-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/machine-learning-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/math-pub-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/mechanics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/phys-math-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/phys-pub-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/probability-statistics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/quantum-mechanics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/relativity-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/set-theory-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/statistical-mechanics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/takumi-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/thermodynamics-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/vector-analysis-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/yasu-book.html</loc>
+  </url>
+  <url>
+    <loc>https://yobinori.jp/review/yobinori-book.html</loc>
+  </url>
 </urlset>
