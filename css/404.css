@@ -87,6 +87,7 @@ ul {
   z-index: 1;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   width: 960px;
   min-height: calc(100vh - 170px);
   margin: 0 auto;
@@ -95,6 +96,8 @@ ul {
 
 .error-copy {
   width: min(720px, 100%);
+  margin-right: auto;
+  margin-left: 0;
 }
 
 .error-code {
@@ -186,6 +189,13 @@ var {
 
 .site-footer small {
   font-size: 12px;
+}
+
+@media screen and (min-width: 1440px) {
+  .error-content {
+    width: 1440px;
+    max-width: calc(100% - 80px);
+  }
 }
 
 @media screen and (max-width: 960px) {
