@@ -85,19 +85,19 @@ ul {
 .error-content {
   position: relative;
   z-index: 1;
+  clear: both;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 960px;
+  width: 720px;
   min-height: calc(100vh - 170px);
-  margin: 0 auto;
+  margin-right: auto;
+  margin-left: calc((100% - 960px) / 2);
   padding: 72px 0 88px;
 }
 
 .error-copy {
-  width: min(720px, 100%);
-  margin-right: auto;
-  margin-left: 0;
+  width: 100%;
 }
 
 .error-code {
@@ -191,13 +191,6 @@ var {
   font-size: 12px;
 }
 
-@media screen and (min-width: 1440px) {
-  .error-content {
-    width: 1200px;
-    max-width: calc(100% - 80px);
-  }
-}
-
 @media screen and (max-width: 960px) {
   .site-header {
     width: auto;
@@ -231,6 +224,8 @@ var {
   .error-content {
     width: 90%;
     min-height: auto;
+    margin-right: auto;
+    margin-left: auto;
     padding: 100px 0 110px;
   }
 
