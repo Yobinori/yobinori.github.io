@@ -8,6 +8,8 @@ import {
   classifyShortVideo,
   defaultTargetDate,
   extractIssueVideoIds,
+  hasShortsMarker,
+  parseChannelFeedVideoLinks,
   run,
   targetDateRange,
   validateTargetDate,
@@ -62,6 +64,38 @@ test("issue video IDs are extracted from open and closed issue bodies", () => {
     { state: "open", body: "unrelated" },
   ]);
   assert.deepEqual([...ids].sort(), ["AbCdEfGhI12", "ZxYwVuTsR98"]);
+});
+
+test("channel feed links distinguish Shorts and regular videos", async () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    <feed xmlns:yt="http://www.youtube.com/xml/schemas/2015">
+      <entry>
+        <yt:videoId>ShortVideo1</yt:videoId>
+        <link rel="alternate" href="https://www.youtube.com/shorts/ShortVideo1" />
+      </entry>
+      <entry>
+        <yt:videoId>NormalVideo</yt:videoId>
+        <link href="https://www.youtube.com/watch?v=NormalVideo&amp;feature=feed" rel="alternate" />
+      </entry>
+    </feed>`;
+  const links = parseChannelFeedVideoLinks(xml);
+
+  assert.equal(links.get("ShortVideo1"), "https://www.youtube.com/shorts/ShortVideo1");
+  assert.equal(links.get("NormalVideo"), "https://www.youtube.com/watch?v=NormalVideo&feature=feed");
+  assert.equal(await classifyShortVideo("ShortVideo1", fetch, links.get("ShortVideo1")), true);
+  assert.equal(await classifyShortVideo("NormalVideo", fetch, links.get("NormalVideo")), false);
+});
+
+test("Shorts markers are recognized in titles and exact tags", () => {
+  assert.equal(hasShortsMarker(video("ShortTitle1", "2026-08-26T00:00:00Z", {
+    snippet: { title: "理系の小話 #shorts" },
+  })), true);
+  assert.equal(hasShortsMarker(video("ShortsTag01", "2026-08-26T00:00:00Z", {
+    snippet: { tags: ["science", "Shorts"] },
+  })), true);
+  assert.equal(hasShortsMarker(video("NormalTitle", "2026-08-26T00:00:00Z", {
+    snippet: { title: "Shortsについて解説します", tags: ["science"] },
+  })), false);
 });
 
 test("Shorts URL redirecting to watch is classified as a normal video", async () => {

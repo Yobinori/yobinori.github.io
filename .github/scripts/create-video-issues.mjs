@@ -7,6 +7,7 @@ const YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3";
 const GITHUB_API_BASE = "https://api.github.com";
 const ISSUE_LABEL = "new-video";
 const USER_AGENT = "yobinori-video-issue-generator/1.0";
+const BROWSER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
 function pad(value) {
   return String(value).padStart(2, "0");
@@ -132,6 +133,38 @@ export function extractIssueVideoIds(issues) {
   return ids;
 }
 
+export function hasShortsMarker(video) {
+  const title = String(video.snippet?.title ?? "");
+  const tags = Array.isArray(video.snippet?.tags) ? video.snippet.tags.map(String) : [];
+  return /(^|\s)#shorts(?:\s|$)/i.test(title) || tags.some((tag) => /^#?shorts$/i.test(tag.trim()));
+}
+
+function parseXmlAttributes(tag) {
+  const attributes = new Map();
+  for (const match of tag.matchAll(/([\w:-]+)\s*=\s*["']([^"']*)["']/g)) {
+    attributes.set(match[1], match[2].replaceAll("&amp;", "&"));
+  }
+  return attributes;
+}
+
+export function parseChannelFeedVideoLinks(xml) {
+  const links = new Map();
+  for (const entryMatch of String(xml).matchAll(/<entry\b[\s\S]*?<\/entry>/g)) {
+    const entry = entryMatch[0];
+    const videoId = entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1]?.trim();
+    if (!videoId) continue;
+
+    for (const linkMatch of entry.matchAll(/<link\b[^>]*>/g)) {
+      const attributes = parseXmlAttributes(linkMatch[0]);
+      if (attributes.get("rel") === "alternate" && attributes.has("href")) {
+        links.set(videoId, attributes.get("href"));
+        break;
+      }
+    }
+  }
+  return links;
+}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -178,7 +211,21 @@ async function youtubeApi(resource, params, apiKey, fetchImpl = fetch) {
   return response.json();
 }
 
-export async function classifyShortVideo(videoId, fetchImpl = fetch) {
+export async function classifyShortVideo(videoId, fetchImpl = fetch, knownVideoUrl = "") {
+  if (knownVideoUrl) {
+    const knownUrl = new URL(knownVideoUrl);
+    if (knownUrl.hostname.endsWith("youtube.com") && knownUrl.pathname.startsWith("/shorts/")) {
+      return true;
+    }
+    if (
+      (knownUrl.hostname.endsWith("youtube.com") && knownUrl.pathname === "/watch") ||
+      knownUrl.hostname === "youtu.be"
+    ) {
+      return false;
+    }
+    throw new Error(`Shorts classification failed for ${videoId}: channel feed returned an unexpected URL.`);
+  }
+
   const url = `https://www.youtube.com/shorts/${videoId}`;
   const response = await fetchWithRetry(
     url,
@@ -188,7 +235,8 @@ export async function classifyShortVideo(videoId, fetchImpl = fetch) {
       headers: {
         Accept: "text/html",
         "Accept-Language": "ja,en;q=0.8",
-        "User-Agent": USER_AGENT,
+        Cookie: "CONSENT=YES+cb.20210328-17-p0.en+FX+410; SOCS=CAI",
+        "User-Agent": BROWSER_USER_AGENT,
       },
     },
     fetchImpl,
@@ -226,6 +274,30 @@ export async function classifyShortVideo(videoId, fetchImpl = fetch) {
   // HTTP 200 body and content type vary on GitHub-hosted runners, so the status
   // itself is the stable signal here.
   return true;
+}
+
+async function getChannelFeedVideoLinks(channelId, fetchImpl = fetch) {
+  const url = new URL("https://www.youtube.com/feeds/videos.xml");
+  url.searchParams.set("channel_id", channelId);
+  const response = await fetchWithRetry(
+    url,
+    {
+      headers: {
+        Accept: "application/atom+xml, application/xml;q=0.9, text/xml;q=0.8",
+        "User-Agent": USER_AGENT,
+      },
+    },
+    fetchImpl,
+  );
+  if (!response.ok) {
+    throw new Error(`YouTube channel feed request failed with HTTP ${response.status}.`);
+  }
+
+  const links = parseChannelFeedVideoLinks(await response.text());
+  if (links.size === 0) {
+    throw new Error("YouTube channel feed did not contain recognizable video entries.");
+  }
+  return links;
 }
 
 async function getUploadsPlaylistId(channelId, apiKey, fetchImpl) {
@@ -447,7 +519,6 @@ async function writeSummary(summaryPath, result) {
 
 export async function run(env = process.env, dependencies = {}) {
   const fetchImpl = dependencies.fetchImpl ?? fetch;
-  const classifier = dependencies.classifier ?? ((id) => classifyShortVideo(id, fetchImpl));
   const apiKey = env.YOUTUBE_API_KEY;
   const channelId = env.YOUTUBE_CHANNEL_ID;
   const token = env.GH_TOKEN;
@@ -466,6 +537,18 @@ export async function run(env = process.env, dependencies = {}) {
   const playlistId = await getUploadsPlaylistId(channelId, apiKey, fetchImpl);
   const videoIds = await getPublishedVideoIds(playlistId, range, apiKey, fetchImpl);
   const videos = await getVideos(videoIds, apiKey, fetchImpl);
+  let classifier = dependencies.classifier;
+  if (!classifier && videos.length > 0) {
+    const feedLinks = await getChannelFeedVideoLinks(channelId, fetchImpl);
+    const videosById = new Map(videos.map((video) => [video.id, video]));
+    classifier = (id) => {
+      const feedLink = feedLinks.get(id);
+      if (feedLink) return classifyShortVideo(id, fetchImpl, feedLink);
+      if (hasShortsMarker(videosById.get(id))) return true;
+      return classifyShortVideo(id, fetchImpl);
+    };
+  }
+  classifier ??= (id) => classifyShortVideo(id, fetchImpl);
 
   // Finish all YouTube and Shorts checks before making any GitHub changes.
   const classification = await classifyCandidates(videos, range, classifier);
