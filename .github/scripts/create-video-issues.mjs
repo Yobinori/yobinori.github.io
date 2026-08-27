@@ -210,7 +210,6 @@ export async function classifyShortVideo(videoId, fetchImpl = fetch) {
     throw new Error(`Shorts classification failed for ${videoId}: HTTP ${response.status}.`);
   }
 
-  const contentType = response.headers.get("content-type") ?? "";
   const html = await response.text();
   const lowerHtml = html.toLowerCase();
   const isChallenge =
@@ -218,16 +217,14 @@ export async function classifyShortVideo(videoId, fetchImpl = fetch) {
     lowerHtml.includes("before you continue to youtube") ||
     lowerHtml.includes("unusual traffic") ||
     lowerHtml.includes("captcha");
-  // YouTube does not expose a Shorts flag in the Data API. In practice, the
-  // /shorts URL redirects regular videos to /watch and serves Shorts as HTML.
-  // The returned HTML varies by region and user agent, so do not depend on
-  // internal JavaScript property names here.
-  const looksLikeShortsPage = contentType.includes("text/html") && html.trim().length > 0;
-
-  if (isChallenge || !looksLikeShortsPage) {
-    throw new Error(`Shorts classification failed for ${videoId}: response was not a recognizable YouTube Shorts page.`);
+  if (isChallenge) {
+    throw new Error(`Shorts classification failed for ${videoId}: YouTube returned a consent or verification page.`);
   }
 
+  // YouTube does not expose a Shorts flag in the Data API. The /shorts URL
+  // redirects regular videos to /watch and returns HTTP 200 for Shorts. The
+  // HTTP 200 body and content type vary on GitHub-hosted runners, so the status
+  // itself is the stable signal here.
   return true;
 }
 

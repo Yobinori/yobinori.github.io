@@ -98,12 +98,12 @@ test("a non-challenge HTML response from the Shorts URL is classified as Shorts"
   assert.equal(await classifyShortVideo("AbCdEfGhI12", fetchImpl), true);
 });
 
-test("an empty HTTP 200 response fails closed", async () => {
+test("an empty HTTP 200 response is still classified as Shorts", async () => {
   const fetchImpl = async () => new Response("", {
     status: 200,
     headers: { "content-type": "text/html" },
   });
-  await assert.rejects(() => classifyShortVideo("AbCdEfGhI12", fetchImpl), /recognizable YouTube Shorts page/);
+  assert.equal(await classifyShortVideo("AbCdEfGhI12", fetchImpl), true);
 });
 
 test("candidate classification honors JST boundaries and excludes live and Shorts", async () => {
