@@ -538,16 +538,31 @@ export async function run(env = process.env, dependencies = {}) {
   const videoIds = await getPublishedVideoIds(playlistId, range, apiKey, fetchImpl);
   const videos = await getVideos(videoIds, apiKey, fetchImpl);
   let classifier = dependencies.classifier;
+
   if (!classifier && videos.length > 0) {
-    const feedLinks = await getChannelFeedVideoLinks(channelId, fetchImpl);
-    const videosById = new Map(videos.map((video) => [video.id, video]));
-    classifier = (id) => {
-      const feedLink = feedLinks.get(id);
-      if (feedLink) return classifyShortVideo(id, fetchImpl, feedLink);
-      if (hasShortsMarker(videosById.get(id))) return true;
-      return classifyShortVideo(id, fetchImpl);
-    };
+  const videosById = new Map(videos.map((video) => [video.id, video]));
+  let feedLinks = new Map();
+  try {
+    feedLinks = await getChannelFeedVideoLinks(channelId, fetchImpl);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(
+      `YouTube channel feed unavailable. Falling back to Shorts URL check: ${message}`,
+    );
   }
+  classifier = (id) => {
+    const video = videosById.get(id);
+    if (hasShortsMarker(video)) {
+      return true;
+    }
+    const feedLink = feedLinks.get(id);
+    if (feedLink) {
+      return classifyShortVideo(id, fetchImpl, feedLink);
+    }
+    return classifyShortVideo(id, fetchImpl);
+  };
+  }
+
   classifier ??= (id) => classifyShortVideo(id, fetchImpl);
 
   // Finish all YouTube and Shorts checks before making any GitHub changes.
