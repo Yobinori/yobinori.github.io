@@ -381,10 +381,18 @@ export async function classifyCandidates(videos, range, classifier = classifySho
   let shortsExcluded = 0;
 
   for (const video of candidates) {
-    if (await classifier(video.id)) {
-      shortsExcluded += 1;
-    } else {
-      eligible.push(video);
+    try {
+      if (await classifier(video.id)) {
+        shortsExcluded += 1;
+      } else {
+        eligible.push(video);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+
+      console.warn(
+        `Skipping video ${video.id} because Shorts classification could not be completed: ${message}`,
+      );
     }
   }
 
