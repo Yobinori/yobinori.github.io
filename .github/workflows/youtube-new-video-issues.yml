@@ -10,6 +10,15 @@ on:
         description: "Target date in JST (YYYY-MM-DD). Empty means yesterday."
         required: false
         type: string
+      start_date:
+        description: "Optional first date in JST for catch-up (YYYY-MM-DD). Overrides lookback."
+        required: false
+        type: string
+      lookback_days:
+        description: "Days ending on target_date, inclusive. Manual runs overlap by 14 days."
+        required: false
+        default: "14"
+        type: string
       dry_run:
         description: "Show what would be created without creating issues."
         required: false
@@ -48,5 +57,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           TARGET_DATE: ${{ inputs.target_date || '' }}
+          START_DATE: ${{ inputs.start_date || '' }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days || '1' }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: node .github/scripts/create-video-issues.mjs
