@@ -1,0 +1,200 @@
+name: Collect YouTube metadata for dot
+run-name: YouTube metadata - ${{ inputs.request_id }}
+on:
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: "Unique request ID (letters, digits, hyphens, underscores)"
+        required: true
+        type: string
+      range_start:
+        description: "Inclusive ISO timestamp with timezone; empty means 7 days ago"
+        required: false
+        type: string
+      range_end:
+        description: "Exclusive ISO timestamp with timezone; empty means now"
+        required: false
+        type: string
+      probe_ids:
+        description: "Optional comma-separated video IDs for classification tests (max 10)"
+        required: false
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: youtube-dot-metadata
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Collect public metadata without creating issues
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          REQUEST_ID: ${{ inputs.request_id }}
+          RANGE_START: ${{ inputs.range_start }}
+          RANGE_END: ${{ inputs.range_end }}
+          PROBE_IDS: ${{ inputs.probe_ids }}
+        shell: python
+        run: |
+          import datetime as dt
+          import json
+          import os
+          import re
+          import sys
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+          
+          UTC = dt.timezone.utc
+          CHANNEL = "UCqmWJJolqAgjIdLqK3zD1QQ"
+          
+          class FetchError(Exception):
+              pass
+          
+          def stamp(value):
+              parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+              if parsed.tzinfo is None:
+                  raise ValueError("timezone required")
+              return parsed.astimezone(UTC)
+          
+          def api(resource, key, **params):
+              query = urllib.parse.urlencode(dict(params, key=key))
+              url = "https://www.googleapis.com/youtube/v3/" + resource + "?" + query
+              try:
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      body = json.load(response)
+                  if not isinstance(body.get("items"), list):
+                      raise FetchError("API_RESPONSE_INVALID")
+                  return body
+              except urllib.error.HTTPError as error:
+                  raise FetchError("API_HTTP_" + str(error.code)) from None
+              except FetchError:
+                  raise
+              except Exception:
+                  raise FetchError("API_TRANSPORT_OR_JSON_ERROR") from None
+          
+          def describe(video):
+              snippet = video.get("snippet", {})
+              status = video.get("status", {})
+              if snippet.get("channelId") != CHANNEL:
+                  return {"id": video.get("id"), "classification": "unknown", "reason": "CHANNEL_MISMATCH"}
+              if status.get("privacyStatus") != "public":
+                  return {"id": video.get("id"), "classification": "unknown", "reason": "NOT_CONFIRMED_PUBLIC"}
+              live = video.get("liveStreamingDetails")
+              live_state = snippet.get("liveBroadcastContent")
+              category = "live" if live or live_state in ("live", "upcoming") else "unknown"
+              return {
+                  "id": video["id"], "title": snippet.get("title"),
+                  "published_at": snippet.get("publishedAt"),
+                  "duration": video.get("contentDetails", {}).get("duration"),
+                  "classification": category,
+                  "reason": "API_LIVE_METADATA" if category == "live" else "SHORTS_CLASSIFICATION_REQUIRED",
+                  "live_state": live_state,
+              }
+          
+          def collect(key, start, end, probe_ids, request_id, getter=api):
+              result = {
+                  "schema_version": 1, "request_id": request_id,
+                  "run_id": os.getenv("GITHUB_RUN_ID"), "run_attempt": os.getenv("GITHUB_RUN_ATTEMPT"),
+                  "source_commit": os.getenv("GITHUB_SHA"),
+                  "fetched_at": dt.datetime.now(UTC).isoformat(),
+                  "channel_id": CHANNEL, "range": {"start": start.isoformat(), "end": end.isoformat()},
+                  "retrieval_status": "failed", "coverage": {"pages": 0, "exhausted": False},
+                  "videos": [], "probes": [], "errors": [],
+              }
+              try:
+                  channels = getter("channels", key, part="contentDetails", id=CHANNEL)
+                  uploads = channels["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+                  ids, missing_dates, seen_tokens = set(), [], set()
+                  token = None
+                  # Exhaust the playlist; do not assume old timestamps prove later pages are old.
+                  for _ in range(100):
+                      params = dict(part="contentDetails", playlistId=uploads, maxResults=50)
+                      if token:
+                          params["pageToken"] = token
+                      batch = getter("playlistItems", key, **params)
+                      result["coverage"]["pages"] += 1
+                      for item in batch["items"]:
+                          detail = item.get("contentDetails", {})
+                          vid, published = detail.get("videoId"), detail.get("videoPublishedAt")
+                          if not vid or not published:
+                              missing_dates.append(vid)
+                              continue
+                          try:
+                              if start <= stamp(published) < end:
+                                  ids.add(vid)
+                          except (ValueError, TypeError):
+                              missing_dates.append(vid)
+                      token = batch.get("nextPageToken")
+                      if not token:
+                          result["coverage"]["exhausted"] = True
+                          break
+                      if token in seen_tokens:
+                          raise FetchError("PAGINATION_LOOP")
+                      seen_tokens.add(token)
+                  if not result["coverage"]["exhausted"]:
+                      result["errors"].append("PAGE_LIMIT_REACHED")
+                  if missing_dates:
+                      result["errors"].append("PLAYLIST_ITEMS_WITHOUT_VALID_DATE")
+                      result["coverage"]["undated_ids"] = missing_dates
+                  wanted = sorted(ids | set(probe_ids))
+                  found = {}
+                  for offset in range(0, len(wanted), 50):
+                      batch = getter("videos", key, part="snippet,contentDetails,liveStreamingDetails,status",
+                                     id=",".join(wanted[offset:offset+50]), maxResults=50)
+                      found.update({item["id"]: item for item in batch["items"]})
+                  for vid in wanted:
+                      if vid not in found:
+                          row = {"id": vid, "classification": "unknown", "reason": "VIDEO_DETAILS_MISSING"}
+                          result["errors"].append("VIDEO_DETAILS_MISSING:" + vid)
+                      else:
+                          row = describe(found[vid])
+                      if vid in ids:
+                          result["videos"].append(row)
+                      if vid in probe_ids:
+                          result["probes"].append(row)
+                  result["retrieval_status"] = "partial" if result["errors"] else "complete"
+              except FetchError as error:
+                  result["errors"].append(str(error))
+              except Exception:
+                  result["errors"].append("UNEXPECTED_RESPONSE_STRUCTURE")
+              result["classification_complete"] = all(v["classification"] != "unknown" for v in result["videos"])
+              result["fetched_at"] = dt.datetime.now(UTC).isoformat()
+              return result
+          
+          def main():
+              key = os.getenv("YOUTUBE_API_KEY", "")
+              now = dt.datetime.now(UTC)
+              try:
+                  start = stamp(os.environ["RANGE_START"]) if os.getenv("RANGE_START") else now - dt.timedelta(days=7)
+                  end = stamp(os.environ["RANGE_END"]) if os.getenv("RANGE_END") else now
+                  probes = [v.strip() for v in os.getenv("PROBE_IDS", "").split(",") if v.strip()]
+                  request_id = os.getenv("REQUEST_ID", "")
+                  if not key or start >= end or (end-start).days > 31 or len(probes) > 10:
+                      raise ValueError()
+                  if not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", request_id):
+                      raise ValueError()
+                  if any(not re.fullmatch(r"[A-Za-z0-9_-]{11}", v) for v in probes):
+                      raise ValueError()
+              except Exception:
+                  print("INVALID_INPUT_OR_MISSING_KEY")
+                  return 1
+              result = collect(key, start, end, probes, request_id)
+              Path("youtube-result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+              # Emit only explicitly selected public metadata, never raw HTTP errors or credentials.
+              print("YOUTUBE_RESULT_JSON=" + json.dumps(result, ensure_ascii=False))
+              return 0 if result["retrieval_status"] == "complete" else 1
+          
+          if __name__ == "__main__":
+              sys.exit(main())
+      - name: Upload public metadata result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-metadata-${{ github.run_id }}-${{ github.run_attempt }}
+          path: youtube-result.json
+          if-no-files-found: error
+          retention-days: 7
