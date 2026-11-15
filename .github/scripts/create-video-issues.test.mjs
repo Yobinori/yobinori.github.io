@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  scanRange,
+  extractPublishedVideoIds,
   buildIssueBody,
   buildVideoHtml,
   classifyCandidates,
@@ -123,21 +125,21 @@ test("an unrecognized Shorts response fails closed", async () => {
   await assert.rejects(() => classifyShortVideo("AbCdEfGhI12", fetchImpl), /classification failed/);
 });
 
-test("a non-challenge HTML response from the Shorts URL is classified as Shorts", async () => {
+test("unrecognized non-challenge HTML remains unresolved", async () => {
   const html = '<html><script>var ytInitialData={"id":"AbCdEfGhI12"}</script></html>';
   const fetchImpl = async () => new Response(html, {
     status: 200,
     headers: { "content-type": "text/html" },
   });
-  assert.equal(await classifyShortVideo("AbCdEfGhI12", fetchImpl), true);
+  await assert.rejects(() => classifyShortVideo("AbCdEfGhI12", fetchImpl), /no recognizable/);
 });
 
-test("an empty HTTP 200 response is still classified as Shorts", async () => {
+test("an empty HTTP 200 response remains unresolved", async () => {
   const fetchImpl = async () => new Response("", {
     status: 200,
     headers: { "content-type": "text/html" },
   });
-  assert.equal(await classifyShortVideo("AbCdEfGhI12", fetchImpl), true);
+  await assert.rejects(() => classifyShortVideo("AbCdEfGhI12", fetchImpl), /no recognizable/);
 });
 
 test("candidate classification honors JST boundaries and excludes live and Shorts", async () => {
@@ -217,7 +219,7 @@ test("dry run detects a video without making GitHub changes", async () => {
   const mock = apiMock();
   const result = await run(
     runEnvironment({ DRY_RUN: "true" }),
-    { fetchImpl: mock.fetchImpl, classifier: async () => false },
+    { publishedIds: new Set(), fetchImpl: mock.fetchImpl, classifier: async () => false },
   );
 
   assert.equal(result.pending.length, 1);
@@ -232,7 +234,7 @@ test("an existing closed issue prevents duplicate issue creation", async () => {
   });
   const result = await run(
     runEnvironment(),
-    { fetchImpl: mock.fetchImpl, classifier: async () => false },
+    { publishedIds: new Set(), fetchImpl: mock.fetchImpl, classifier: async () => false },
   );
 
   assert.equal(result.pending.length, 0);
@@ -245,7 +247,7 @@ test("a normal video creates the label and one issue", async () => {
   const mock = apiMock();
   const result = await run(
     runEnvironment(),
-    { fetchImpl: mock.fetchImpl, classifier: async () => false },
+    { publishedIds: new Set(), fetchImpl: mock.fetchImpl, classifier: async () => false },
   );
 
   assert.equal(result.created.length, 1);
@@ -256,4 +258,65 @@ test("a normal video creates the label and one issue", async () => {
   const issueRequest = JSON.parse(postCalls[1].body);
   assert.equal(issueRequest.title, "[新着動画] 動画 AbCdEfGhI12");
   assert.match(issueRequest.body, /<!-- youtube-video-id: AbCdEfGhI12 -->/);
+});
+
+test("overlapping range and explicit catch-up preserve JST boundaries", () => {
+  const range = scanRange("2026-11-14", "", "14");
+  assert.equal(range.start.toISOString(), "2026-10-31T15:00:00.000Z");
+  assert.equal(range.end.toISOString(), "2026-11-14T15:00:00.000Z");
+  assert.equal(scanRange("2026-11-14", "2026-09-01").start.toISOString(), "2026-08-31T15:00:00.000Z");
+  assert.throws(() => scanRange("2026-11-14", "2026-11-15"));
+  assert.throws(() => scanRange("2026-11-14", "", "0"));
+});
+test("published HTML prevents duplicate issue creation without an old issue", async () => {
+  const mock = apiMock();
+  const result = await run(runEnvironment(), {
+    publishedIds: extractPublishedVideoIds('<a href="https://youtu.be/AbCdEfGhI12">video</a>'),
+    fetchImpl: mock.fetchImpl, classifier: async () => false,
+  });
+  assert.equal(result.pending.length, 0);
+  assert.equal(mock.calls.filter(call => call.method !== "GET").length, 0);
+});
+test("classification failure creates a durable review issue", async () => {
+  const mock = apiMock();
+  const result = await run(runEnvironment(), {
+    publishedIds: new Set(), fetchImpl: mock.fetchImpl,
+    classifier: async () => { throw new Error("unavailable"); },
+  });
+  assert.equal(result.unresolved.length, 1);
+  assert.equal(result.created.length, 1);
+  const body = JSON.parse(mock.calls.find(call => call.method === "POST" && call.url.endsWith("/issues")).body).body;
+  assert.match(body, /要確認/);
+  assert.match(body, /承認を得る/);
+});
+test("pagination does not stop at an old out-of-order video", async () => {
+  const mock = apiMock();
+  let pages = 0;
+  const fetchImpl = async (input, options) => {
+    const url = new URL(input);
+    if (url.pathname.endsWith("/playlistItems")) {
+      pages++;
+      if (!url.searchParams.has("pageToken")) return Response.json({
+        items: [{contentDetails:{videoId:"OldVideo001", videoPublishedAt:"2020-01-01T00:00:00Z"}}],
+        nextPageToken:"next",
+      });
+    }
+    return mock.fetchImpl(input, options);
+  };
+  const result = await run(runEnvironment({DRY_RUN:"true"}), {publishedIds:new Set(),fetchImpl,classifier:async()=>false});
+  assert.equal(pages, 2);
+  assert.equal(result.pending.length, 1);
+});
+test("missing video details fail instead of reporting no new videos", async () => {
+  const mock = apiMock();
+  const fetchImpl = (input, options) => new URL(input).pathname.endsWith("/videos")
+    ? Promise.resolve(Response.json({items:[]})) : mock.fetchImpl(input, options);
+  await assert.rejects(() => run(runEnvironment(), {publishedIds:new Set(),fetchImpl,classifier:async()=>false}), /coverage is incomplete/);
+  assert.equal(mock.calls.filter(call=>call.method !== "GET").length,0);
+});
+test("unknown classification in dry run does not write GitHub", async () => {
+  const mock = apiMock();
+  const result = await run(runEnvironment({DRY_RUN:"true"}), {publishedIds:new Set(),fetchImpl:mock.fetchImpl,classifier:async()=>{throw Error("unavailable")}});
+  assert.equal(result.unresolved.length,1);
+  assert.equal(mock.calls.filter(call=>call.method !== "GET").length,0);
 });
