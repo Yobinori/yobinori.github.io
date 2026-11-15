@@ -1,4 +1,4 @@
-import { appendFile } from "node:fs/promises";
+import { appendFile, readdir, readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
 const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
@@ -44,6 +44,31 @@ export function targetDateRange(targetDate) {
   validateTargetDate(targetDate);
   const start = new Date(`${targetDate}T00:00:00+09:00`);
   return { start, end: new Date(start.getTime() + DAY_MS) };
+}
+
+export function scanRange(targetDate, startDate = "", lookbackDays = "1") {
+  const days = Number(lookbackDays);
+  if (!Number.isInteger(days) || days < 1 || days > 366) {
+    throw new Error("LOOKBACK_DAYS must be an integer from 1 to 366.");
+  }
+  const range = targetDateRange(targetDate);
+  range.start = startDate ? targetDateRange(validateTargetDate(startDate)).start
+    : new Date(range.start.getTime() - (days - 1) * DAY_MS);
+  if (range.start >= range.end) throw new Error("START_DATE must not follow TARGET_DATE.");
+  return range;
+}
+
+export function extractPublishedVideoIds(html) {
+  return new Set([...html.matchAll(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/)|i\.ytimg\.com\/vi\/)([A-Za-z0-9_-]{11})/g)].map(match => match[1]));
+}
+
+async function getPublishedIds(directory = "video") {
+  const ids = new Set();
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
+    for (const id of extractPublishedVideoIds(await readFile(directory + "/" + entry.name, "utf8"))) ids.add(id);
+  }
+  return ids;
 }
 
 export function isWithinRange(publishedAt, range) {
@@ -102,6 +127,7 @@ export function buildIssueBody(video) {
 - YouTube: ${videoUrl}
 - 動画ID: \`${video.id}\`
 - 追加先: 未選択
+- 種別: ${video.classification === "unknown" ? "要確認（Shorts判定未完了・自動掲載不可）" : "通常動画"}
 
 ![${escapeMarkdownAlt(title)}](${thumbnailUrl})
 
@@ -113,9 +139,10 @@ ${fence}
 
 ## 作業
 
-- [ ] 追加先の \`video/*.html\` を決める
+- [ ] 種別が未確認の場合は通常動画・Shorts・ライブを確認する
+- [ ] 掲載先ページのリンク・見出し・表示名をユーザーに提案し、承認を得る
 - [ ] HTMLを追加する
-- [ ] GitHub Pagesで表示を確認する
+- [ ] GitHub Pagesで表示・動画IDの重複なし・タイトル2行以内を確認する
 - [ ] 確認後、このIssueを閉じる
 
 ${issueMarker(video.id)}
@@ -269,11 +296,9 @@ export async function classifyShortVideo(videoId, fetchImpl = fetch, knownVideoU
     throw new Error(`Shorts classification failed for ${videoId}: YouTube returned a consent or verification page.`);
   }
 
-  // YouTube does not expose a Shorts flag in the Data API. The /shorts URL
-  // redirects regular videos to /watch and returns HTTP 200 for Shorts. The
-  // HTTP 200 body and content type vary on GitHub-hosted runners, so the status
-  // itself is the stable signal here.
-  return true;
+  // An empty/error HTTP 200 is not evidence that this is a Short.
+  if (html.includes('"webPageType":"WEB_PAGE_TYPE_SHORTS"') && html.includes(videoId)) return true;
+  throw new Error(`Shorts classification failed for ${videoId}: no recognizable Shorts metadata.`);
 }
 
 async function getChannelFeedVideoLinks(channelId, fetchImpl = fetch) {
@@ -317,7 +342,8 @@ async function getUploadsPlaylistId(channelId, apiKey, fetchImpl) {
 async function getPublishedVideoIds(playlistId, range, apiKey, fetchImpl) {
   const ids = [];
   let pageToken;
-  let reachedOlderVideos = false;
+  const seenTokens = new Set();
+  let pages = 0;
 
   do {
     const payload = await youtubeApi(
@@ -332,22 +358,21 @@ async function getPublishedVideoIds(playlistId, range, apiKey, fetchImpl) {
       fetchImpl,
     );
 
-    for (const item of payload.items ?? []) {
-      const publishedAt = item.contentDetails?.videoPublishedAt ?? item.snippet?.publishedAt;
+    if (!Array.isArray(payload.items)) throw new Error("Playlist response is incomplete.");
+    for (const item of payload.items) {
+      const publishedAt = item.contentDetails?.videoPublishedAt;
       const videoId = item.contentDetails?.videoId;
-      if (!publishedAt || !videoId) continue;
+      if (!publishedAt || !videoId || !Number.isFinite(Date.parse(publishedAt))) throw new Error("Playlist entry is missing publication metadata; coverage is incomplete.");
 
       const timestamp = new Date(publishedAt).getTime();
-      if (timestamp < range.start.getTime()) {
-        reachedOlderVideos = true;
-        break;
-      }
-      if (timestamp < range.end.getTime()) {
+      if (timestamp >= range.start.getTime() && timestamp < range.end.getTime()) {
         ids.push(videoId);
       }
     }
 
-    pageToken = reachedOlderVideos ? undefined : payload.nextPageToken;
+    pageToken = payload.nextPageToken;
+    if (pageToken && (seenTokens.has(pageToken) || ++pages >= 100)) throw new Error("Playlist coverage is incomplete.");
+    if (pageToken) seenTokens.add(pageToken);
   } while (pageToken);
 
   return [...new Set(ids)];
@@ -368,6 +393,8 @@ async function getVideos(videoIds, apiKey, fetchImpl) {
     );
     videos.push(...(payload.items ?? []));
   }
+  const returned = new Set(videos.map(video => video.id));
+  if (videoIds.some(id => !returned.has(id))) throw new Error("Video details are missing; coverage is incomplete.");
   return videos;
 }
 
@@ -379,6 +406,7 @@ export async function classifyCandidates(videos, range, classifier = classifySho
   const candidates = publicVideos.filter((video) => !video.liveStreamingDetails);
   const eligible = [];
   let shortsExcluded = 0;
+  const unresolved = [];
 
   for (const video of candidates) {
     try {
@@ -390,8 +418,9 @@ export async function classifyCandidates(videos, range, classifier = classifySho
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
 
+      unresolved.push({ ...video, classification: "unknown" });
       console.warn(
-        `Skipping video ${video.id} because Shorts classification could not be completed: ${message}`,
+        `Retaining video ${video.id} because Shorts classification could not be completed: ${message}`,
       );
     }
   }
@@ -400,6 +429,7 @@ export async function classifyCandidates(videos, range, classifier = classifySho
     detected: publicVideos.length,
     liveExcluded: liveExcluded.length,
     shortsExcluded,
+    unresolved,
     eligible,
   };
 }
@@ -495,7 +525,8 @@ async function writeSummary(summaryPath, result) {
   const lines = [
     "## YouTube新着動画の確認結果",
     "",
-    `- 対象日: ${result.targetDate}（日本時間）`,
+    `- 対象範囲: ${result.range.start.toISOString()} 以上 ～ ${result.range.end.toISOString()} 未満`,
+    `- 判定保留: ${result.unresolved.length}件（要確認Issueとして保持）`,
     `- 公開動画: ${result.detected}件`,
     `- Shorts除外: ${result.shortsExcluded}件`,
     `- ライブ除外: ${result.liveExcluded}件`,
@@ -505,7 +536,7 @@ async function writeSummary(summaryPath, result) {
     "",
   ];
 
-  if (result.eligible.length === 0) {
+  if (result.eligible.length === 0 && result.unresolved.length === 0) {
     lines.push("対象となる通常動画はありませんでした。", "");
   } else {
     lines.push("### 対象動画", "");
@@ -541,7 +572,7 @@ export async function run(env = process.env, dependencies = {}) {
     throw new Error("GITHUB_REPOSITORY is not available or invalid.");
   }
 
-  const range = targetDateRange(targetDate);
+  const range = scanRange(targetDate, env.START_DATE || "", env.LOOKBACK_DAYS || "1");
   const playlistId = await getUploadsPlaylistId(channelId, apiKey, fetchImpl);
   const videoIds = await getPublishedVideoIds(playlistId, range, apiKey, fetchImpl);
   const videos = await getVideos(videoIds, apiKey, fetchImpl);
@@ -576,7 +607,9 @@ export async function run(env = process.env, dependencies = {}) {
   // Finish all YouTube and Shorts checks before making any GitHub changes.
   const classification = await classifyCandidates(videos, range, classifier);
   const existingIds = await getExistingVideoIds(repository, token, fetchImpl);
-  const pending = classification.eligible.filter((video) => !existingIds.has(video.id));
+  const publishedIds = dependencies.publishedIds ?? await getPublishedIds();
+  const queue = [...classification.eligible, ...classification.unresolved];
+  const pending = queue.filter(video => !existingIds.has(video.id) && !publishedIds.has(video.id));
   const created = [];
 
   if (!dryRun && pending.length > 0) {
@@ -588,12 +621,14 @@ export async function run(env = process.env, dependencies = {}) {
 
   const result = {
     targetDate,
+    range,
     dryRun,
     ...classification,
     pending,
     created,
-    duplicateSkipped: classification.eligible.length - pending.length,
+    duplicateSkipped: queue.length - pending.length,
   };
+  console.log("YOUTUBE_ISSUE_RESULT_JSON=" + JSON.stringify(result));
   await writeSummary(env.GITHUB_STEP_SUMMARY, result);
   return result;
 }
