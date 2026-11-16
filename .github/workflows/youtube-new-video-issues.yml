@@ -1,6 +1,8 @@
 name: Create issues for new YouTube videos
 
 on:
+  issues:
+    types: [edited]
   schedule:
     # 09:07 JST (JST does not observe daylight saving time)
     - cron: "7 0 * * *"
@@ -35,6 +37,10 @@ concurrency:
 
 jobs:
   create-issues:
+    if: >-
+      github.event_name != 'issues' ||
+      (github.event.issue.number == 14 && github.event.sender.id == 32870956 &&
+       github.event.sender.login == 'Yobinori' && github.event.changes.body != null)
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -48,9 +54,10 @@ jobs:
           node-version: 22
 
       - name: Run tests
-        run: node --test .github/scripts/create-video-issues.test.mjs
+        run: node --test .github/scripts/create-video-issues.test.mjs .github/scripts/issue-video-dispatch.test.mjs
 
       - name: Check YouTube and create issues
+        if: github.event_name != 'issues'
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           YOUTUBE_CHANNEL_ID: ${{ vars.YOUTUBE_CHANNEL_ID }}
@@ -61,3 +68,11 @@ jobs:
           LOOKBACK_DAYS: ${{ inputs.lookback_days || '1' }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: node .github/scripts/create-video-issues.mjs
+
+      - name: Validate and process dedicated issue request
+        if: github.event_name == 'issues'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_CHANNEL_ID: ${{ vars.YOUTUBE_CHANNEL_ID }}
+          GH_TOKEN: ${{ github.token }}
+        run: node .github/scripts/issue-video-dispatch.mjs
